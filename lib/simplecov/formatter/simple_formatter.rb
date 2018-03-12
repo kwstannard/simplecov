@@ -1,11 +1,14 @@
 # frozen_string_literal: true
 
+require "simplecov/rounding"
+
 #
 # A ridiculously simple formatter for SimpleCov results.
 #
 module SimpleCov
   module Formatter
     class SimpleFormatter
+      include Rounding
       # Takes a SimpleCov::Result and generates a string out of it
       def format(result)
         output = "".dup
@@ -14,7 +17,7 @@ module SimpleCov
           output << "=" * 40
           output << "\n"
           files.each do |file|
-            output << "#{file.filename} (coverage: #{file.covered_percent.round(2)}%)\n"
+            output << "#{file.filename} (coverage: #{file.covered_percent.round(significant_digits)}%)\n"
           end
           output << "\n"
         end

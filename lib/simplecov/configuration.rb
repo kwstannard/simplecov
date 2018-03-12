@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "fileutils"
+require "simplecov/rounding"
 require "docile"
 require "simplecov/formatter/multi_formatter"
 #
@@ -11,6 +12,7 @@ require "simplecov/formatter/multi_formatter"
 module SimpleCov
   module Configuration # rubocop:disable ModuleLength
     attr_writer :filters, :groups, :formatter
+    include Rounding
 
     #
     # The root for the project. This defaults to the
@@ -224,8 +226,8 @@ module SimpleCov
     #
     # Default is 0% (disabled)
     #
-    def minimum_coverage(coverage = nil)
-      @minimum_coverage ||= (coverage || 0).to_f.round(2)
+    def minimum_coverage(coverage = 0)
+      @minimum_coverage ||= round(coverage)
     end
 
     #
@@ -234,8 +236,8 @@ module SimpleCov
     #
     # Default is 100% (disabled)
     #
-    def maximum_coverage_drop(coverage_drop = nil)
-      @maximum_coverage_drop ||= (coverage_drop || 100).to_f.round(2)
+    def maximum_coverage_drop(coverage_drop = 100)
+      @maximum_coverage_drop ||= round(coverage_drop)
     end
 
     #
@@ -245,8 +247,8 @@ module SimpleCov
     #
     # Default is 0% (disabled)
     #
-    def minimum_coverage_by_file(coverage = nil)
-      @minimum_coverage_by_file ||= (coverage || 0).to_f.round(2)
+    def minimum_coverage_by_file(coverage = 0)
+      @minimum_coverage_by_file ||= round(coverage)
     end
 
     #
